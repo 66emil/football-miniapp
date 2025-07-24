@@ -32,5 +32,5 @@ class Booking(SQLModel, table=True):
     expires_at: datetime | None = None
     paid_at: datetime | None = None
     refunded: bool = False
-
+    payment_id: str | None = Field(default=None, index=True)
     user: "User" = Relationship(back_populates="bookings")
