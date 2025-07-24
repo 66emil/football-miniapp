@@ -1,9 +1,9 @@
 # macOS system files
 .DS_Store
 # .env и локальные БД
-*.env
-app.db
-backend/app.db
-**/.venv
-__pycache__/
+**/.venv/
+*.db
 *.sqlite
+__pycache__/
+*.py[cod]
+.env
