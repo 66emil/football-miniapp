@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..core.database import AsyncSessionLocal
 from .. import crud
 
-router = APIRouter()
+router = APIRouter(prefix="/bookings", tags=["bookings"])
 
 async def get_db():
     async with AsyncSessionLocal() as s:

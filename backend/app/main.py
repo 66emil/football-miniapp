@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from .routers import matches, bookings
+from .routers import bookings
+from .routers import matches
 from .core.database import init_db
 from .routers import webhook
 from .workers import start_scheduler
@@ -13,10 +14,11 @@ logging.basicConfig(
 
 app = FastAPI(title="Football Mini App")
 
-app.include_router(webhook.router, tags=["payments"])
-app.include_router(matches.router, prefix="/matches", tags=["matches"])
-app.include_router(bookings.router, prefix="/bookings", tags=["bookings"])
-
+app.include_router(matches.router)
+app.include_router(webhook.router)
+app.include_router(matches.router)
+app.include_router(bookings.router)
+    
 @app.on_event("startup")
 async def on_startup():
     start_scheduler() 

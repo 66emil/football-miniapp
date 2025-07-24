@@ -1,28 +1,58 @@
-# bot/keyboards/admin.py
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-def main_menu() -> ReplyKeyboardMarkup:
+def main_menu():
     return ReplyKeyboardMarkup(
-        resize_keyboard=True,       # компактная высота
         keyboard=[
-            [KeyboardButton(text="➕ Создать матч")],
             [KeyboardButton(text="📋 Список матчей")],
-        ]
-    )
-
-def matches_menu(match_ids: list[int]) -> ReplyKeyboardMarkup:
-    return ReplyKeyboardMarkup(
+            [KeyboardButton(text="➕ Создать матч")],
+        ],
         resize_keyboard=True,
-        one_time_keyboard=True,      # клавиатура исчезнет после выбора
-        keyboard=[[KeyboardButton(text=f"Матч #{mid}")] for mid in match_ids],
     )
 
-def match_actions() -> ReplyKeyboardMarkup:
+def matches_menu(matches):
+    # matches: List[Match] — список объектов или словарей
     return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text=f"Матч #{m.id} {'❌' if getattr(m, 'status', '') == 'cancelled' else ''}")]
+            for m in matches
+        ] + [[KeyboardButton(text="↩️ Назад")]],
+        resize_keyboard=True
+    )
+
+def match_actions():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="👥 Игроки"), KeyboardButton(text="✏️ Изменить")],
+            [KeyboardButton(text="❌ Отменить"), KeyboardButton(text="↩️ Назад")]
+        ],
+        resize_keyboard=True,
+    )
+
+def players_menu(bookings):
+    # Для каждого игрока — отдельная кнопка
+    buttons = [
+        [KeyboardButton(text=f"🗑 {b.user_id} (#{b.id})")]
+        for b in bookings
+    ]
+    buttons.append([KeyboardButton(text="↩️ Назад")])
+    return ReplyKeyboardMarkup(keyboard=buttons, resize_keyboard=True)
+
+def edit_fields_kb():
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [KeyboardButton(text="price")],
+            [KeyboardButton(text="date")],
+            [KeyboardButton(text="capacity")],
+            [KeyboardButton(text="↩️ Назад")],
+        ],
         resize_keyboard=True,
         one_time_keyboard=True,
-        keyboard=[
-            [KeyboardButton(text="✏️ Изменить"),  KeyboardButton(text="❌ Отменить")],
-            [KeyboardButton(text="👥 Игроки"),     KeyboardButton(text="↩️ Назад")],
-        ]
+    )
+
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+
+def back_only_kb():
+    return ReplyKeyboardMarkup(
+        keyboard=[[KeyboardButton(text="↩️ Назад")]],
+        resize_keyboard=True,
     )

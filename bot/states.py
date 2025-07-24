@@ -6,3 +6,8 @@ class CreateMatch(StatesGroup):
     duration  = State()
     price     = State()
     capacity  = State()
+
+class EditMatch(StatesGroup):
+    field = State()
+    value = State()
+    

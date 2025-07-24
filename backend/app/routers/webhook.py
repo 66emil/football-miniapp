@@ -3,7 +3,7 @@ from ..core.database import AsyncSessionLocal
 from ..models import Booking
 from datetime import datetime
 
-router = APIRouter()
+router = APIRouter(prefix="/payments", tags=["payments"])
 
 @router.post("/payments/webhook", status_code=status.HTTP_204_NO_CONTENT)
 async def yk_webhook(payload: dict, bg: BackgroundTasks):
